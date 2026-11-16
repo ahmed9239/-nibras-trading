@@ -2,168 +2,173 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090d14">
-  <title>نبراس للتداول V27</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #090d14;
-      color: #e5e7eb;
-      font-family: Arial, sans-serif;
-    }
-    .panel {
-      background: #111925;
-      border: 1px solid #263244;
-      border-radius: 14px;
-      padding: 14px;
-    }
-    .gold { color: #d6b45c; }
-    .green { color: #22c55e; }
-    .red { color: #ef4444; }
-    .muted { color: #91a0b5; }
-    button, select, input {
-      border-radius: 9px;
-      padding: 10px;
-      background: #1b2737;
-      color: white;
-      border: 1px solid #34445a;
-    }
-    button:active { transform: scale(.98); }
-    .active {
-      border-color: #d6b45c;
-      color: #d6b45c;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090d14">
+<title>نبراس للتداول V27</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#090d14;color:#e5e7eb;
+  font-family:Arial,sans-serif
+}
+.panel{
+  background:#111925;border:1px solid #263244;
+  border-radius:14px;padding:14px
+}
+.gold{color:#d6b45c}
+.green{color:#22c55e}
+.red{color:#ef4444}
+.muted{color:#91a0b5}
+button,input{
+  border-radius:9px;padding:10px;
+  background:#1b2737;color:white;
+  border:1px solid #34445a
+}
+button:disabled{opacity:.55}
+button:active{transform:scale(.98)}
+.active{border-color:#d6b45c;color:#d6b45c}
+</style>
 </head>
 
 <body>
-  <header class="p-4 border-b border-slate-700">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-bold">
-          <span class="green">N</span> نبراس
-          <span class="gold">PRO</span>
-        </h1>
-        <p class="muted text-xs mt-1">V27 | تداول ذكي</p>
+
+<header class="p-4 border-b border-slate-700">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">
+        <span class="green">N</span> نبراس
+        <span class="gold">PRO</span>
+      </h1>
+      <p class="muted text-xs mt-1">V27 | تداول ذكي</p>
+    </div>
+    <div class="text-left">
+      <span class="text-xs gold">BINANCE FUTURES</span>
+      <p class="text-xs green">محرك التحليل</p>
+    </div>
+  </div>
+</header>
+
+<main class="p-3 space-y-3">
+
+  <section class="panel">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="font-bold gold">لوحة التداول</h2>
+      <span class="text-xs muted">تحليل تجريبي</span>
+    </div>
+
+    <label class="text-sm muted">العملة</label>
+    <input id="symbol" value="BTCUSDT"
+      class="w-full mt-1 mb-3" placeholder="مثال BTCUSDT">
+
+    <label class="text-sm muted">الفريم الزمني</label>
+    <div class="grid grid-cols-3 gap-2 mt-2">
+      <button class="tf active" data-tf="15m">15 دقيقة</button>
+      <button class="tf" data-tf="5m">5 دقائق</button>
+      <button class="tf" data-tf="1h">ساعة</button>
+    </div>
+
+    <button id="analyzeBtn"
+      class="w-full mt-4 font-bold"
+      style="background:#166534;border-color:#22c55e">
+      ابدأ التحليل
+    </button>
+  </section>
+
+  <section class="panel">
+    <h2 class="gold font-bold mb-3">نتيجة الإشارة</h2>
+
+    <div class="text-center py-4">
+      <div id="signal" class="text-3xl font-bold muted">
+        انتظار
       </div>
-      <div class="text-left">
-        <span class="text-xs gold">BINANCE FUTURES</span>
-        <p class="text-xs green">محرك التحليل</p>
+      <p id="signalNote" class="text-xs muted mt-2">
+        اضغط ابدأ التحليل لقراءة السوق
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 text-sm">
+      <div>
+        <p class="muted">سعر الدخول</p>
+        <p id="entry" class="font-bold">—</p>
+      </div>
+      <div>
+        <p class="muted">وقف الخسارة</p>
+        <p id="stop" class="red font-bold">—</p>
+      </div>
+      <div>
+        <p class="muted">الهدف الأول</p>
+        <p id="target1" class="green font-bold">—</p>
+      </div>
+      <div>
+        <p class="muted">الهدف الثاني</p>
+        <p id="target2" class="green font-bold">—</p>
+      </div>
+      <div>
+        <p class="muted">الهدف الثالث</p>
+        <p id="target3" class="green font-bold">—</p>
+      </div>
+      <div>
+        <p class="muted">قوة الإشارة</p>
+        <p id="strength" class="gold font-bold">—</p>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main class="p-3 space-y-3">
-
-    <section class="panel">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="font-bold gold">لوحة التداول</h2>
-        <span class="text-xs muted">تحليل تجريبي</span>
+  <section class="panel">
+    <h2 class="gold font-bold mb-3">تأكيد الاتجاه</h2>
+    <div class="grid grid-cols-3 gap-2 text-center text-sm">
+      <div class="bg-slate-800 rounded-lg p-3">
+        <p class="muted">4 ساعات</p>
+        <p id="trend4h">—</p>
       </div>
-
-      <label class="text-sm muted">العملة</label>
-      <input id="symbol" value="BTCUSDT"
-        class="w-full mt-1 mb-3" placeholder="مثال BTCUSDT">
-
-      <label class="text-sm muted">الفريم الزمني</label>
-      <div class="grid grid-cols-3 gap-2 mt-2">
-        <button class="tf active" data-tf="15m">15 دقيقة</button>
-        <button class="tf" data-tf="5m">5 دقائق</button>
-        <button class="tf" data-tf="1h">ساعة</button>
+      <div class="bg-slate-800 rounded-lg p-3">
+        <p class="muted">ساعة</p>
+        <p id="trend1h">—</p>
       </div>
-
-      <button id="analyzeBtn"
-        class="w-full mt-4 font-bold"
-        style="background:#166534;border-color:#22c55e">
-        ابدأ التحليل
-      </button>
-    </section>
-
-    <section class="panel">
-      <h2 class="gold font-bold mb-3">نتيجة الإشارة</h2>
-      <div class="text-center py-4">
-        <div id="signal" class="text-3xl font-bold muted">
-          انتظار
-        </div>
-        <p id="signalNote" class="text-xs muted mt-2">
-          اضغط ابدأ التحليل لقراءة السوق
-        </p>
+      <div class="bg-slate-800 rounded-lg p-3">
+        <p class="muted">الفريم المختار</p>
+        <p id="trendMain">—</p>
       </div>
-      <div class="grid grid-cols-2 gap-3 text-sm">
-        <div>
-          <p class="muted">سعر الدخول</p>
-          <p id="entry" class="font-bold">—</p>
-        </div>
-        <div>
-          <p class="muted">وقف الخسارة</p>
-          <p id="stop" class="red font-bold">—</p>
-        </div>
-        <div>
-          <p class="muted">الهدف الأول</p>
-          <p id="target1" class="green font-bold">—</p>
-        </div>
-        <div>
-          <p class="muted">الهدف الثاني</p>
-          <p id="target2" class="green font-bold">—</p>
-        </div>
-        <div>
-          <p class="muted">الهدف الثالث</p>
-          <p id="target3" class="green font-bold">—</p>
-        </div>
-        <div>
-          <p class="muted">قوة الإشارة</p>
-          <p id="strength" class="gold font-bold">—</p>
-        </div>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="panel">
-      <h2 class="gold font-bold mb-3">تأكيد الاتجاه</h2>
-      <div class="grid grid-cols-3 gap-2 text-center text-sm">
-        <div class="bg-slate-800 rounded-lg p-3">
-          <p class="muted">4 ساعات</p>
-          <p id="trend4h">—</p>
-        </div>
-        <div class="bg-slate-800 rounded-lg p-3">
-          <p class="muted">ساعة</p>
-          <p id="trend1h">—</p>
-        </div>
-        <div class="bg-slate-800 rounded-lg p-3">
-          <p class="muted">الفريم المختار</p>
-          <p id="trendMain">—</p>
-        </div>
-      </div>
-    </section>
+  <section class="panel">
+    <h2 class="gold font-bold mb-2">مخطط العملة</h2>
+    <div id="chart" class="w-full" style="height:420px">
+      <p class="muted text-center pt-16">
+        سيتم ربط المخطط في المرحلة التالية
+      </p>
+    </div>
+  </section>
 
-    <section class="panel">
-      <h2 class="gold font-bold mb-2">مخطط العملة</h2>
-      <div id="chart" class="w-full" style="height:420px"></div>
-    </section>
+  <footer class="text-center muted text-xs py-4">
+    نبراس للتداول — تداول ذكي
+    <p class="mt-1">الإشارات تحليلية وليست ضماناً للربح</p>
+  </footer>
 
-    <footer class="text-center muted text-xs py-4">
-      نبراس للتداول — تداول ذكي
-      <p class="mt-1">الإشارات تحليلية وليست ضماناً للربح</p>
-    </footer>
-  </main>
+</main>
 
-  <script>
-    let selectedTimeframe = "15m";
+<script>
+"use strict";
 
-    document.querySelectorAll(".tf").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".tf").forEach(b =>
-          b.classList.remove("active")
-        );
-        button.classList.add("active");
-        selectedTimeframe = button.dataset.tf;
-      });
-    });
-    
-// ===== محرك تحليل نبراس V27 =====
+// ===== إعداد الفريم الزمني =====
+
+let selectedTimeframe = "15m";
+
+document.querySelectorAll(".tf").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".tf").forEach(b =>
+      b.classList.remove("active")
+    );
+    button.classList.add("active");
+    selectedTimeframe = button.dataset.tf;
+  });
+});
+
+// ===== حساب EMA =====
 
 function calculateEMA(values, period) {
   const k = 2 / (period + 1);
@@ -175,6 +180,8 @@ function calculateEMA(values, period) {
 
   return ema;
 }
+
+// ===== حساب RSI =====
 
 function calculateRSI(values, period = 14) {
   if (values.length <= period) return 50;
@@ -193,8 +200,10 @@ function calculateRSI(values, period = 14) {
 
   for (let i = period + 1; i < values.length; i++) {
     const change = values[i] - values[i - 1];
+
     avgGain =
       (avgGain * (period - 1) + Math.max(change, 0)) / period;
+
     avgLoss =
       (avgLoss * (period - 1) + Math.max(-change, 0)) / period;
   }
@@ -204,6 +213,8 @@ function calculateRSI(values, period = 14) {
   const rs = avgGain / avgLoss;
   return 100 - (100 / (1 + rs));
 }
+
+// ===== حساب ATR =====
 
 function calculateATR(candles, period = 14) {
   const trs = [];
@@ -222,8 +233,13 @@ function calculateATR(candles, period = 14) {
   }
 
   const recent = trs.slice(-period);
+
+  if (!recent.length) return 0;
+
   return recent.reduce((a, b) => a + b, 0) / recent.length;
 }
+
+// ===== جلب بيانات Binance Futures =====
 
 async function getMarketData(symbol, interval) {
   const url =
@@ -256,6 +272,11 @@ async function getMarketData(symbol, interval) {
   const atr = calculateATR(candles, 14);
   const price = closes[closes.length - 1];
 
+  if (![ema20, ema50, rsi, atr, price].every(Number.isFinite) ||
+      atr <= 0) {
+    throw new Error("تعذر حساب مؤشرات السوق");
+  }
+
   let trend = "WAIT";
 
   if (ema20 > ema50) trend = "LONG";
@@ -271,6 +292,8 @@ async function getMarketData(symbol, interval) {
   };
 }
 
+// ===== عرض الاتجاه =====
+
 function showTrend(elementId, trend) {
   const element = document.getElementById(elementId);
 
@@ -281,11 +304,14 @@ function showTrend(elementId, trend) {
   };
 
   element.textContent = labels[trend] || "—";
+
   element.className =
     trend === "LONG" ? "green font-bold" :
     trend === "SHORT" ? "red font-bold" :
     "muted font-bold";
 }
+
+// ===== تنسيق الأسعار =====
 
 function formatPrice(value) {
   if (!Number.isFinite(value)) return "—";
@@ -295,13 +321,16 @@ function formatPrice(value) {
   });
 }
 
+// ===== محرك إشارات نبراس V27 - النسخة المطورة =====
+
 async function runNebrasAnalysis() {
   const button = document.getElementById("analyzeBtn");
+
   const symbol = document.getElementById("symbol")
     .value.trim().toUpperCase();
 
   if (!/^[A-Z0-9]{5,30}$/.test(symbol)) {
-    alert("أدخل رمز عملة صحيحاً مثل BTCUSDT");
+    alert("أدخل رمزاً صحيحاً مثل BTCUSDT");
     return;
   }
 
@@ -323,26 +352,25 @@ async function runNebrasAnalysis() {
     showTrend("trend1h", data1h.trend);
     showTrend("trendMain", dataMain.trend);
 
-    const allLong =
-      data4h.trend === "LONG" &&
-      data1h.trend === "LONG" &&
-      dataMain.trend === "LONG";
+    // تقييم توافق الفريمات
+    const longScore =
+      Number(data4h.trend === "LONG") +
+      Number(data1h.trend === "LONG") +
+      Number(dataMain.trend === "LONG") +
+      Number(dataMain.rsi >= 50 && dataMain.rsi < 70);
 
-    const allShort =
-      data4h.trend === "SHORT" &&
-      data1h.trend === "SHORT" &&
-      dataMain.trend === "SHORT";
+    const shortScore =
+      Number(data4h.trend === "SHORT") +
+      Number(data1h.trend === "SHORT") +
+      Number(dataMain.trend === "SHORT") +
+      Number(dataMain.rsi <= 50 && dataMain.rsi > 30);
 
     let signal = "WAIT";
 
-    if (allLong && dataMain.rsi >= 50 && dataMain.rsi < 70) {
-      signal = "LONG";
-    }
+    if (longScore === 4) signal = "LONG";
+    if (shortScore === 4) signal = "SHORT";
 
-    if (allShort && dataMain.rsi <= 50 && dataMain.rsi > 30) {
-      signal = "SHORT";
-    }
-
+    // حساب الدخول والوقف والأهداف
     const entry = dataMain.price;
     const risk = dataMain.atr * 1.5;
 
@@ -365,6 +393,7 @@ async function runNebrasAnalysis() {
       target3 = entry - risk * 3;
     }
 
+    // عرض الإشارة
     const signalElement = document.getElementById("signal");
 
     signalElement.textContent =
@@ -379,8 +408,8 @@ async function runNebrasAnalysis() {
 
     document.getElementById("signalNote").textContent =
       signal === "WAIT"
-        ? "لا يوجد توافق كافٍ بين الفريمات وشروط RSI"
-        : `اتجاه متوافق على الفريمات الثلاثة | RSI: ${dataMain.rsi.toFixed(1)}`;
+        ? `لا توجد إشارة مكتملة | شراء: ${longScore}/4 | بيع: ${shortScore}/4`
+        : `إشارة مكتملة | RSI: ${dataMain.rsi.toFixed(1)} | ATR: ${formatPrice(dataMain.atr)}`;
 
     document.getElementById("entry").textContent =
       formatPrice(signal === "WAIT" ? null : entry);
@@ -398,10 +427,29 @@ async function runNebrasAnalysis() {
       formatPrice(target3);
 
     document.getElementById("strength").textContent =
-      signal === "WAIT" ? "غير مكتملة" : "3 من 3 فريمات";
+      signal === "WAIT" ? "غير مكتملة" : "4 من 4";
+
+    // حفظ آخر نتيجة تحليل
+    window.nebrasLastAnalysis = {
+      symbol,
+      timeframe: selectedTimeframe,
+      signal,
+      entry: signal === "WAIT" ? null : entry,
+      stop,
+      target1,
+      target2,
+      target3,
+      rsi: dataMain.rsi,
+      atr: dataMain.atr,
+      longScore,
+      shortScore,
+      timestamp: new Date().toISOString()
+    };
 
   } catch (error) {
-    document.getElementById("signal").textContent = "تعذر التحليل";
+    document.getElementById("signal").textContent =
+      "تعذر التحليل";
+
     document.getElementById("signalNote").textContent =
       error.message || "تحقق من الاتصال ورمز العملة";
 
@@ -413,9 +461,12 @@ async function runNebrasAnalysis() {
   }
 }
 
+// ===== تشغيل المحرك =====
+
 document.getElementById("analyzeBtn")
   .addEventListener("click", runNebrasAnalysis);
 
-  </script>
+</script>
+
 </body>
 </html>
